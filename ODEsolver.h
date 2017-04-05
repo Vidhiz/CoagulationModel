@@ -18,7 +18,7 @@ public:
   };
 
   enum econsts {
-    /*A09*/ k2on = 0, N2b, N2se, k2off, kz2promplus, kz2promminus,
+    /*A09*/ k2on, N2b, N2se, k2off, kz2promplus, kz2promminus,
     /*A10*/ kz2promcat, kz5e2mcat, kz5e2mminus, kz5e2mplus, kz8e2mcat,
     kz8e2mminus, kz8e2mplus,
     /*A11*/ k5on, N5b, N5se, k5off, kz5e10mplus, kz5e10mminus,
@@ -79,7 +79,26 @@ public:
 private:
 
   //consts
-  ConstMap consts = { {k2on, 1.1}, {k2off, 4.4} };
+  ConstMap consts = { {k2on, 1.1}, {N2b, 2.2}, {N2se, 3.3}, {k2off, 4.4},
+                      {kz2promplus,5.5}, {kz2promminus, 6.6},
+        /*A10*/ {kz2promcat,7.7}, {kz5e2mcat,8.8}, {kz5e2mminus,9.9}, 
+                {kz5e2mplus,10.10}, {kz8e2mcat,11.11}, {kz8e2mminus,12.12},
+                {kz8e2mplus, 13.13},
+        /*A11*/ {k5on,14.14}, {N5b,15.15},{N5se,16.16}, {k5off,17.17}, 
+                {kz5e10mplus,18.18}, {kz5e10mminus, 19.19},
+        /*A12*/ {kz5e10mcat,20.20}, {kprominus,21.21}, {kproplus,22.22}, 
+                {kapce5mplus,23.23}, {kapce5minus, 24.24},
+        /*A13*/ {k8on, 25.25}, {N8b,26.26}, {N8se,27.27}, {k8off,28.28}, 
+                {kz8e10mplus,29.29}, {kz8e10mminus,30.30},
+        /*A14*/ {kz8e10cat,31.31}, {ktenminus,32.32}, {ktenplus,33.33}, 
+                {kapce8mplus,34.34}, {kapce8mminus,35.35},
+        /*A15*/ {k9on,36.36}, {N9b,37.37}, {N9se,38.38}, {k9off,39.39},
+        /*A16*/
+        /*A17*/ {k10on,40.40}, {N10b,41.41}, {N10se,42.42}, {k10off,43.43}, 
+                {k10tenmminus,44.44}, {kz10tenmplus,45.45},
+        /*A18*/ {kz2e10mminus,46.46}, {kz10tenmcat,47.47},
+        /*A19*/ {kz10tenmminus,48.48}
+   };
   
   //vars
   VarMap vars;
