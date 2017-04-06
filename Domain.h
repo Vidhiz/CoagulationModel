@@ -5,6 +5,9 @@
 #include <vector>
 #include "Point.h"
 
+
+typedef std::vector<std::vector<double>> Mesh;
+
 /// Domain
 class Domain{
 	public:
@@ -22,9 +25,9 @@ class Domain{
 			dy = ylen/ny;
 
 			// Set up mesh size. (HEIGHT x WIDTH)
-			Mesh.resize(ny);
+			mesh.resize(ny);
 			for (int i = 0; i < ny; ++i)
-				Mesh[i].resize(nx);
+				mesh[i].resize(nx);
 	
 		}
 
@@ -37,9 +40,9 @@ class Domain{
 			Domain::ny = ny;
 
 			// Set up mesh size. (HEIGHT x WIDTH)
-			Mesh.resize(ny);
+			mesh.resize(ny);
 			for (int i = 0; i < ny; ++i)
-				Mesh[i].resize(nx);
+				mesh[i].resize(nx);
 			
 			// fill mesh with coordinates
 
@@ -53,7 +56,7 @@ class Domain{
 		}	
 
 		// mesh
-		typedef std::vector<std::vector<double>> Mesh;
+		Mesh mesh;
 
 		/// x - length
 		double xlen;
@@ -100,7 +103,7 @@ class Domain{
 		}
 		Mesh get_mesh()
 		{
-			return Mesh;
+			return mesh;
 		}
 		
 };
