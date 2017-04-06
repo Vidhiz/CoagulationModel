@@ -6,7 +6,7 @@
 #include "Point.h"
 
 
-typedef std::vector<std::vector<double>> Mesh;
+typedef std::vector<std::vector<Point>> Mesh;
 
 /// Domain
 class Domain{
