@@ -65,7 +65,7 @@ class Domain{
 		double ylen;
 
 		/// points in x
-	    double nx;
+		double nx;
 
 		/// points in y
 		double ny;
@@ -77,33 +77,33 @@ class Domain{
 		double dy;
 
 		/// get and set variables:
-		double get_nx()
+		double& get_nx()
 		{
-			return nx;
+			return this->nx;
 		}
-		double get_ny()
+		double& get_ny()
 		{
-			return ny;
+			return this->ny;
 		}
-		double get_xlen()
+		double& get_xlen()
 		{
-			return xlen;
+			return this->xlen;
 		}
-		double get_ylen()
+		double& get_ylen()
 		{
-			return ylen;
+			return this->ylen;
 		}
-		double get_dx()
+		double& get_dx()
 		{
-			return dx;
+			return this->dx;
 		}
-		double get_dy()
+		double& get_dy()
 		{
-			return dy;
+			return this->dy;
 		}
-		Mesh get_mesh()
+		Mesh& get_mesh()
 		{
-			return mesh;
+			return this->mesh;
 		}
 		
 };

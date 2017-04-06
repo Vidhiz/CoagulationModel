@@ -8,17 +8,17 @@ using namespace std;
 /////////////////////////////
 int main(int argc, char *argv[])
 {
-  	ODESolver *solver = new ODESolver();
-  	Domain *domain = new Domain(50,20,100,80);
+	ODESolver *solver = new ODESolver();
 
-  	ODESolver::ConstMap &consts = solver->getConsts();
+	Domain *domain = new Domain(50,20,100,80);
 
-	cout<<"Constants assigned as follows:"<<endl;
+	ODESolver::ConstMap &consts = solver->getConsts();
+
+	cout<<"Constants for ODEs assigned as follows:"<<endl;
 	for (const auto &kv : consts)
 	{
 		cout << kv.first<<" = "<< kv.second << endl;
 	}
-
 
 
 	return 0;

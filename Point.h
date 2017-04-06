@@ -12,6 +12,11 @@ class Point
 		Point()
 		{
 			std::cout<<"Point object !";
+  			Cvals.resize(ODESolver::eLASTV);
+		    for (int i=0;i<ODESolver::eLASTV;i++)
+		    {
+		      Cvals[i]=0.0;
+		    }
 		}
 
 		/// Destructor
@@ -21,5 +26,5 @@ class Point
 		}
 
 		/// vector which contains the chemical concentrations
-		std::vector<double> Cval;
+		std::vector<double> Cvals;
 };
