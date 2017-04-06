@@ -5,6 +5,7 @@
 #include <vector>
 #include "Point.h"
 
+namespace ODESolver{
 
 typedef std::vector<std::vector<Point>> Mesh;
 
@@ -107,3 +108,4 @@ class Domain{
 		}
 		
 };
+}

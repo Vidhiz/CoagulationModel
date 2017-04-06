@@ -4,6 +4,7 @@
 #include <string>
 #include <vector>
 
+namespace ODESolver{
 class Point
 {
 	public:
@@ -11,7 +12,6 @@ class Point
 		/// Default Constructor
 		Point()
 		{
-			std::cout<<"Point object !";
   			Cvals.resize(ODESolver::eLASTV);
 		    for (int i=0;i<ODESolver::eLASTV;i++)
 		    {
@@ -28,3 +28,4 @@ class Point
 		/// vector which contains the chemical concentrations
 		std::vector<double> Cvals;
 };
+}

@@ -4,6 +4,7 @@
 #include <string>
 #include <vector>
 
+namespace ODESolver{
 /// ODESolver
 class ODESolver
 {
@@ -49,12 +50,26 @@ public:
   const static int numV = 35;
   const static int numC = 52;
 
-  /// Constructor
+  // Final time and time-step
+  double T;
+  double dt; 
+
+  /// Default Constructor
   ODESolver()
   {
 	std::cout<<"Created ODESolver.\n";
-	//this->populateConstMap();
+	T = 5.0;
+	dt = 0.001;
   }
+
+  /// Parametrized constructor
+  ODESolver(double T, double dt)
+  {
+	std::cout<<"Created ODESolver.\n";
+	ODESolver::T = T;
+	ODESolver::dt = dt;
+  }
+
 
   /// Destructor
   ~ODESolver()
@@ -95,3 +110,4 @@ private:
   
 
 };
+}
