@@ -79,14 +79,14 @@ public:
 private:
 
   //consts
-  ConstMap consts = { {k2on, 1.1}, {N2b, 2.2}, {N2se, 3.3}, {k2off, 4.4},
-                      {kz2promplus,5.5}, {kz2promminus, 6.6},
-        /*A10*/ {kz2promcat,7.7}, {kz5e2mcat,8.8}, {kz5e2mminus,9.9}, 
-                {kz5e2mplus,10.10}, {kz8e2mcat,11.11}, {kz8e2mminus,12.12},
+  ConstMap consts = { {k2on, 1.0e7}, {N2b, 1000.0}, {N2se, 1000.0}, {k2off, 5.9},
+                      {kz2promplus, 1.03e8}, {kz2promminus, 1.0},
+        /*A10*/ {kz2promcat,30.0}, {kz5e2mcat,0.23}, {kz5e2mminus,1.0}, 
+                {kz5e2mplus,1.73e7}, /**/{kz8e2mcat,11.11}, {kz8e2mminus,12.12},
                 {kz8e2mplus, 13.13},
         /*A11*/ {k5on,14.14}, {N5b,15.15},{N5se,16.16}, {k5off,17.17}, 
                 {kz5e10mplus,18.18}, {kz5e10mminus, 19.19},
-        /*A12*/ {kz5e10mcat,20.20}, {kprominus,21.21}, {kproplus,22.22}, 
+        /*A12*/ {kz5e10mcat,20.20}, {kprominus,21.21}, {kproplus,1.0e8}, 
                 {kapce5mplus,23.23}, {kapce5minus, 24.24},
         /*A13*/ {k8on, 25.25}, {N8b,26.26}, {N8se,27.27}, {k8off,28.28}, 
                 {kz8e10mplus,29.29}, {kz8e10mminus,30.30},
