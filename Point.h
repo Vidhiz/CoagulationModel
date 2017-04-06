@@ -11,7 +11,7 @@ class Point
 		/// Default Constructor
 		Point()
 		{
-			cout<<"Point object !";
+			std::cout<<"Point object !";
 		}
 
 		/// Destructor
@@ -24,9 +24,9 @@ class Point
 		{
 	  		double x;
 	  		double y;
-	  		std::vector<double>; // information of all the chemicals at this point
+	  		std::vector<double> C; // information of all the chemicals at this point
 		};	
 
-		/// 3vector which contains x coordinate, y coordinate and 
-		std::vector<  > Ptdata;
-}
+		/// vector which contains x coordinate, y coordinate and chemical concentrations
+		std::vector<Pt> Ptdata;
+};
