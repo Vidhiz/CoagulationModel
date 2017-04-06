@@ -22,14 +22,9 @@ class Domain{
 			dy = ylen/ny;
 
 			// Set up mesh size. (HEIGHT x WIDTH)
-			mesh.resize(ny);
+			Mesh.resize(ny);
 			for (int i = 0; i < ny; ++i)
-				mesh[i].resize(nx);
-
-			// fill mesh with coordinates
-			for (int i = 0; i < ny; ++i)
-				for (int j = 0; j < nx; ++j)
-					mesh[i][j] = {0 + dx*j, 0 + dy*j};
+				Mesh[i].resize(nx);
 	
 		}
 
@@ -42,9 +37,9 @@ class Domain{
 			Domain::ny = ny;
 
 			// Set up mesh size. (HEIGHT x WIDTH)
-			mesh.resize(ny);
+			Mesh.resize(ny);
 			for (int i = 0; i < ny; ++i)
-				mesh[i].resize(nx);
+				Mesh[i].resize(nx);
 			
 			// fill mesh with coordinates
 
@@ -56,6 +51,9 @@ class Domain{
 		{
 			std::cout<<"Destroyed Domain object.\n";
 		}	
+
+		// mesh
+		typedef std::vector<std::vector<double>> Mesh;
 
 		/// x - length
 		double xlen;
@@ -74,9 +72,6 @@ class Domain{
 
 		// grid spacing in y
 		double dy;
-
-		// mesh
-		std::vector<std::vector<Point> > mesh;
 
 		/// get and set variables:
 		double get_nx()
@@ -103,9 +98,9 @@ class Domain{
 		{
 			return dy;
 		}
-		std::vector<std::vector<double> > get_mesh()
+		Mesh get_mesh()
 		{
-			return mesh;
+			return Mesh;
 		}
 		
 };
