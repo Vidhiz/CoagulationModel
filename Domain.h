@@ -1,3 +1,5 @@
+#ifndef _REACTIONS_DOMAIN_H_
+#define _REACTIONS_DOMAIN_H_
 
 #include <iostream>
 #include <map>
@@ -5,7 +7,7 @@
 #include <vector>
 #include "Point.h"
 
-namespace ODESolver{
+namespace Reactions{
 
 typedef std::vector<std::vector<Point>> Mesh;
 
@@ -106,6 +108,24 @@ class Domain{
 		{
 			return this->mesh;
 		}
+
+	   void updateTotal()
+	   {
+	   		for(int j = 0; j<ny; j++)
+				for(int k = 0; k<nx;k++)
+	   			{
+	   				mesh[j][k].Cvals[e2mtot] = mesh[j][k].Cvals[PBe2ba] + mesh[j][k].Cvals[PBz5ba_e2ba] + mesh[j][k].Cvals[PBz8ba_e2ba]; 
+	   				mesh[j][k].Cvals[z2mtot] = mesh[j][k].Cvals[PBz2ba] + mesh[j][k].Cvals[PBz2ba_pro];
+	   				mesh[j][k].Cvals[ze5mtot] = mesh[j][k].Cvals[PBz5ba] + mesh[j][k].Cvals[PBz5ba_e10ba] +  mesh[j][k].Cvals[PBz5ba_e2ba] + mesh[j][k].Cvals[PBe5ba] + mesh[j][k].Cvals[PBapc_e5ba] + mesh[j][k].Cvals[PBpro] + mesh[j][k].Cvals[PBz2ba_pro];
+	   				mesh[j][k].Cvals[ze8mtot] = mesh[j][k].Cvals[PBz8ba] + mesh[j][k].Cvals[PBz8ba_e2ba] + mesh[j][k].Cvals[PBz8ba_e10ba] + mesh[j][k].Cvals[PBe8ba] + mesh[j][k].Cvals[PBapc_e8ba] + mesh[j][k].Cvals[PBten] + mesh[j][k].Cvals[PBz10ba_ten] + mesh[j][k].Cvals[PBtenstar] + mesh[j][k].Cvals[PBz10ba_tenstar];
+	   				mesh[j][k].Cvals[ze9mtot] = mesh[j][k].Cvals[PBz9ba] + mesh[j][k].Cvals[PBe9ba] + mesh[j][k].Cvals[PBz10ba_ten] + mesh[j][k].Cvals[PBten];
+	   				mesh[j][k].Cvals[ze10mtot] = mesh[j][k].Cvals[PBz10ba] + mesh[j][k].Cvals[PBz10ba_tenstar] + mesh[j][k].Cvals[PBe10ba] + mesh[j][k].Cvals[PBpro] + mesh[j][k].Cvals[PBz8ba_e10ba] + mesh[j][k].Cvals[PBz5ba_e10ba] + mesh[j][k].Cvals[PBz10ba_ten] + mesh[j][k].Cvals[PBz2ba_pro];
+
+	   			}
+	   }
+  
 		
 };
+
 }
+#endif //_REACTIONS_DOMAIN_H_

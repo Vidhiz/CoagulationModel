@@ -5,7 +5,49 @@
 
 using namespace std;
 
-namespace ODESolver{
+namespace Reactions{
+	double ODESolver::RK2solve(Domain *domain, Mesh k1, Mesh k2)
+	{
+
+		// total points in domain
+		double N = domain->nx * domain->ny;
+
+		// Resize k1 and k2 (HEIGHT x WIDTH)
+		k1.resize(domain->ny);
+		k2.resize(domain->ny);
+		for (int i = 0; i < domain->ny; ++i)
+		{
+			k1[i].resize(domain->nx);
+			k2[i].resize(domain->nx);
+		}   
+
+	  	double current_time = 0;
+
+	  	// loop over all variables
+		while(current_time<solver->T)
+		{
+			current_time = current_time + solver->dt;
+
+			// call function to update bound plateltes z and e put together
+			domain->updateTotal();
+
+			for( int i = 0; i< solver->numV; i++)
+			{
+				// for each point in the domain :
+				for(int j = 0; j<domain->ny; j++)
+					for(int k = 0; k<domain->nx;k++)
+							k1[j][k].Cvals[PBz2ba] = solver->dt * 
+							(
+									consts[k2on]*domain->mesh[j][k].Cvals[PBz2ba]* //k21on*z2*
+									(consts[N2b]*Pba + consts[N2se]*Psea - domain->mesh[j][k].Cvals[PBz2ba] - domain->mesh[j][k].Cvals[z2mtot] - domain->mesh[j][k].Cvals[e2mtot])
+							);
+			}
+
+		}
+		return current_time;
+  
+	}
+}
 
 // signature of function to display output concentrations:
 void displayC(ODESolver *, Domain*, double );
@@ -16,11 +58,13 @@ int main(int argc, char *argv[])
 	ODESolver *solver = new ODESolver(2,0.5);
 
 	Domain *domain = new Domain(50,20,100,80);
+	double current_time = 0; 
 
-	// total points in domain
-	double N = domain->nx * domain->ny;
 	double Pba, Psea;
-	double current_time = 0;
+
+	// RK-2, need to store k1 and k2 (temp vars per stage)
+	Mesh k1;
+	Mesh k2;
 
 	ODESolver::ConstMap &consts = solver->getConsts();
 
@@ -35,43 +79,14 @@ int main(int argc, char *argv[])
 	cin>>Pba>>Psea;
 	cout<< "You entered: Pba="<<Pba<< " and Psea="<<Psea<<endl;;
 
-	// RK-2, need to store k1 and k2 (temp vars per stage)
-	std::vector<std::vector<Point>> k1;
-	std::vector<std::vector<Point>> k2;
-
-	// Resize k1 and k2 (HEIGHT x WIDTH)
-	k1.resize(domain->ny);
-	k2.resize(domain->ny);
-	for (int i = 0; i < domain->ny; ++i)
-	{
-		k1[i].resize(domain->nx);
-		k2[i].resize(domain->nx);
-	}   
+	// set Pba and Psea for solver
+	solver->setPba(Pba);
+	solver->setPsea(Psea);
 
 	// begin time tracking:
 	time_t start = time(NULL);
 
-	// loop over all variables
-	while(current_time<solver->T)
-	{
-		current_time = current_time + solver->dt;
-
-		// call function to update bound plateltes z and e put together
-		updateTotal();
-
-		for( int i = 0; i< solver->numV; i++)
-		{
-			// for each point in the domain :
-			for(int j = 0; j<domain->ny; j++)
-				for(int k = 0; k<domain->nx;k++)
-						k1[j][k].Cvals[ODESolver::PBz2ba] = solver->dt * 
-						(
-								consts[ODESolver::k2on]*domain->mesh[j][k].Cvals[ODESolver::PBz2ba]* //k21on*z2*
-								(consts[ODESolver::N2b]*Pba + consts[ODESolver::N2se]*Psea - domain->mesh[j][k].Cvals[ODESolver::PBz2ba] - domain->mesh[j][k].Cvals[ODESolver::z2mtot] - domain->mesh[j][k].Cvals[ODESolver::e2mtot])
-						);
-		}
-
-	}
+	current_time = solver->RK2solve(domain, k1, k2);
 
 	cout<<"time elapsed="<<time(NULL) - start<<endl;;
 
@@ -95,4 +110,3 @@ void displayC(ODESolver  *solver, Domain *domain, double current_time){
 
 }
 
-}

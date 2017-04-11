@@ -1,31 +1,27 @@
+#ifndef _REACTIONS_POINT_H_
+#define _REACTIONS_POINT_H_
 
 #include <iostream>
 #include <map>
 #include <string>
 #include <vector>
+#include "ODEsolver.h"
 
-namespace ODESolver{
+namespace Reactions{
 class Point
 {
 	public:
 		
 		/// Default Constructor
-		Point()
-		{
-  			Cvals.resize(ODESolver::eLASTV);
-		    for (int i=0;i<ODESolver::eLASTV;i++)
-		    {
-		      Cvals[i]=0.0;
-		    }
-		}
+		Point();
+		
 
 		/// Destructor
-		~Point()
-		{
-
-		}
-
+		~Point();
+		
 		/// vector which contains the chemical concentrations
 		std::vector<double> Cvals;
 };
 }
+
+#endif //_REACTIONS_POINT_H_
