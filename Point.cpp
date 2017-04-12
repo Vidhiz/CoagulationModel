@@ -1,3 +1,4 @@
+#include "myEnums.h"
 #include "Point.h"
 
 namespace Reactions

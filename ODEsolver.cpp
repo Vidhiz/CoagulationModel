@@ -1,4 +1,4 @@
-// Platelet-bound chemical specied : Purely reaction
+// Platelet-bound chemical species : Purely reaction
 
 #include "ODEsolver.h"
 #include "Domain.h"
@@ -6,11 +6,18 @@
 using namespace std;
 
 namespace Reactions{
-	double ODESolver::RK2solve(Domain *domain, Mesh k1, Mesh k2)
+	double ODESolver::RK2solve(Domain *domain)
 	{
 
 		// total points in domain
 		double N = domain->nx * domain->ny;
+
+		// RK-2, need to store k1 and k2 (temp vars per stage)
+		Mesh k1;
+		Mesh k2;
+
+		//get the mesh to work on
+		Mesh &m = domain->get_mesh();
 
 		// Resize k1 and k2 (HEIGHT x WIDTH)
 		k1.resize(domain->ny);
@@ -21,26 +28,26 @@ namespace Reactions{
 			k2[i].resize(domain->nx);
 		}   
 
-	  	double current_time = 0;
+	    double current_time = 0;
 
 	  	// loop over all variables
-		while(current_time<solver->T)
+		while(current_time<T)
 		{
-			current_time = current_time + solver->dt;
+			current_time = current_time + dt;
 
 			// call function to update bound plateltes z and e put together
 			domain->updateTotal();
 
-			for( int i = 0; i< solver->numV; i++)
+			for(int i = 0; i< numV; i++)
 			{
 				// for each point in the domain :
 				for(int j = 0; j<domain->ny; j++)
 					for(int k = 0; k<domain->nx;k++)
-							k1[j][k].Cvals[PBz2ba] = solver->dt * 
-							(
-									consts[k2on]*domain->mesh[j][k].Cvals[PBz2ba]* //k21on*z2*
-									(consts[N2b]*Pba + consts[N2se]*Psea - domain->mesh[j][k].Cvals[PBz2ba] - domain->mesh[j][k].Cvals[z2mtot] - domain->mesh[j][k].Cvals[e2mtot])
-							);
+							k1[j][k].Cvals[PBz2ba] = dt * 
+											(
+												consts[k2on]*m[j][k].Cvals[PBz2ba]* //k21on*z2*
+												(consts[N2b]*Pba + consts[N2se]*Psea - m[j][k].Cvals[PBz2ba] - m[j][k].Cvals[z2mtot] - m[j][k].Cvals[e2mtot])
+											);		
 			}
 
 		}
@@ -48,6 +55,10 @@ namespace Reactions{
   
 	}
 }
+
+//move this to another file: driver.cpp
+
+using namespace Reactions;
 
 // signature of function to display output concentrations:
 void displayC(ODESolver *, Domain*, double );
@@ -62,11 +73,7 @@ int main(int argc, char *argv[])
 
 	double Pba, Psea;
 
-	// RK-2, need to store k1 and k2 (temp vars per stage)
-	Mesh k1;
-	Mesh k2;
-
-	ODESolver::ConstMap &consts = solver->getConsts();
+	ConstMap &consts = solver->getConsts();
 
 	// check assignment of constants
 	/*cout<<"Constants for ODEs assigned as follows:"<<endl;
@@ -86,7 +93,7 @@ int main(int argc, char *argv[])
 	// begin time tracking:
 	time_t start = time(NULL);
 
-	current_time = solver->RK2solve(domain, k1, k2);
+	current_time = solver->RK2solve(domain);
 
 	cout<<"time elapsed="<<time(NULL) - start<<endl;;
 

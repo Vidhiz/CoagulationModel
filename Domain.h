@@ -5,6 +5,7 @@
 #include <map>
 #include <string>
 #include <vector>
+#include "ODEsolver.h"
 #include "Point.h"
 
 namespace Reactions{
@@ -47,8 +48,6 @@ class Domain{
 			for (int i = 0; i < ny; ++i)
 				mesh[i].resize(nx);
 			
-			// fill mesh with coordinates
-
 
 		}
 
@@ -79,7 +78,7 @@ class Domain{
 		// grid spacing in y
 		double dy;
 
-		/// get and set variables:
+		/// get variables:
 		double& get_nx()
 		{
 			return this->nx;
@@ -109,6 +108,36 @@ class Domain{
 			return this->mesh;
 		}
 
+		/// set variables:
+		void set_nx(double n)
+		{
+			this->nx = n;
+		}
+		void set_ny(double n)
+		{
+			this->ny = n;
+		}
+		void set_xlen(double len)
+		{
+		    this->xlen = len;
+		}
+		void set_ylen(double len)
+		{
+			this->ylen = len;
+		}
+		void set_dx(double d)
+		{
+			this->dx = d;
+		}
+		void set_dy(double d)
+		{
+			this->dy = d;
+		}
+		void set_mesh(Mesh &m)
+		{
+			this->mesh = m;
+		}
+
 	   void updateTotal()
 	   {
 	   		for(int j = 0; j<ny; j++)
@@ -127,5 +156,5 @@ class Domain{
 		
 };
 
-}
+} // namespace Reactions
 #endif //_REACTIONS_DOMAIN_H_
