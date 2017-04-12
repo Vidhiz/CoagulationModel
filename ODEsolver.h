@@ -19,12 +19,12 @@ namespace Reactions{
 	{
 	public:
 
-	  const static int numV = 31;
+	  const static int numV = 32;
 	  const static int numC = 52;
 
 	  // Final time and time-step
 	  double T;
-	  double dt; 
+	  double dt, tchar; 
 
 	  // Constants provided by user to solver
 	  double Pba, Psea;
@@ -35,6 +35,7 @@ namespace Reactions{
 		std::cout<<"Created deafult ODESolver.\n";
 		T = 5.0;
 		dt = 0.001;
+		tchar = 1e-5; // what should this be?
 	  }
 
 	  /// Parametrized constructor
@@ -68,7 +69,10 @@ namespace Reactions{
 	  	Psea = psea;
 	  }
 
-	  double RK2solve(Domain*);
+	  double RK2solve(Domain &d);
+
+	  // for RK2 co-efficient computations
+	  void computeK(Mesh &m, Point &kp);
 
 
 
