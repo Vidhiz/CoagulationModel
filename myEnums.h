@@ -22,9 +22,9 @@ namespace Reactions
 		/*A14*/ kz8e10mcat, ktenminus, ktenplus, kapce8mplus, kapce8mminus,
 		/*A15*/ k9on, N9b, N9se, k9off,
 		/*A16*/
-		/*A17*/ k10on, N10b, N10se, k10off, k10tenmminus, kz10tenmplus,
-		/*A18*/ kz2e10mminus, kz10tenmcat,
-		/*A19*/ kz10tenmminus,
+		/*A17*/ k10on, N10b, N10se, k10off, kz10tenmminus, kz10tenmplus,
+		/*A18*/ kz10tenmcat,
+		/*A19*/ 
 		/*A20*/
 		/*A21*/
 		/*A22*/
@@ -45,7 +45,7 @@ namespace Reactions
 //		static const double k2on 	= 42.0;
 //		static const double N2b 	= 12;
 //
-//	};
+//			};
 }
 
 
