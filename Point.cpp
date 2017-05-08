@@ -11,6 +11,8 @@ Point::Point()
   {
     Cvals[i]=0.0;
   }
+  Psea = 0.0;
+  Pba = 0.0;
 }
 
 /// Destructor

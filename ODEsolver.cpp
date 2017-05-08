@@ -35,6 +35,7 @@ namespace Reactions{
 		}   
 
 	    double current_time = 0;
+	    double dtby2 = dt/2;
 
 	  	// loop over all variables
 		while(current_time<T)
@@ -74,7 +75,7 @@ namespace Reactions{
 						                std::plus<double>() );
 						// (b) multiply (dt/2)*(k1+k2), store in temp
 						std::transform(k1plusk2[j][k].Cvals.begin(), k1plusk2[j][k].Cvals.end(), temp[j][k].Cvals.begin(),
-               							std::bind1st(std::multiplies<double>(),dt/2));
+               							std::bind1st(std::multiplies<double>(),dtby2));
 						// (c) update m[j][k].Cvals[$] with  m[j][k].Cvals[$] + temp
 						std::transform( m[j][k].Cvals.begin(), m[j][k].Cvals.end(),
 						                temp[j][k].Cvals.begin(), m[j][k].Cvals.begin(),  
@@ -93,14 +94,14 @@ namespace Reactions{
 
 		/*A.9*/ kp.Cvals[PBz2ba] = tchar*(
 									Consts::k2on*p.Cvals[PBz2ba]* //k2on*z2*
-									(Consts::N2b*Pba + Consts::N2se*Psea - p.Cvals[PBz2ba] - p.Cvals[z2mtot] - p.Cvals[e2mtot])
+									(Consts::N2b*p.Pba + Consts::N2se*p.Psea - p.Cvals[PBz2ba] - p.Cvals[z2mtot] - p.Cvals[e2mtot])
 									- Consts::k2off*p.Cvals[PBz2ba] 
 									- Consts::kz2promplus*p.Cvals[PBz2ba]*p.Cvals[PBpro] 
 									+ Consts::kz2promminus*p.Cvals[PBz2ba_pro]
 								);	
 		/*A.10*/kp.Cvals[PBe2ba] = tchar*(
 									Consts::k2on*p.Cvals[PBe2ba]* //k2on*e2*
-									(Consts::N2b*Pba + Consts::N2se*Psea - p.Cvals[PBz2ba] - p.Cvals[z2mtot] - p.Cvals[e2mtot])
+									(Consts::N2b*p.Pba + Consts::N2se*p.Psea - p.Cvals[PBz2ba] - p.Cvals[z2mtot] - p.Cvals[e2mtot])
 									- Consts::k2off*p.Cvals[PBe2ba] 
 									+ Consts::kz2promcat*p.Cvals[PBz2ba_pro]
 									+ (Consts::kz5e2mcat + Consts::kz5e2mminus)*p.Cvals[PBz5ba_e2ba]
@@ -111,7 +112,7 @@ namespace Reactions{
 								);
 		/*A.11*/kp.Cvals[PBz5ba] = tchar*(
 									Consts::k5on*p.Cvals[PBz5ba]* //k5on*z5*
-									(Consts::N5b*Pba + Consts::N5se*Psea - p.Cvals[ze5mtot])
+									(Consts::N5b*p.Pba + Consts::N5se*p.Psea - p.Cvals[ze5mtot])
 									- Consts::k5off*p.Cvals[PBz5ba]
 									- Consts::kz5e10mplus*p.Cvals[PBz5ba]*p.Cvals[PBe10ba]
 									+ Consts::kz5e10mminus*p.Cvals[PBz5ba_e10ba]
@@ -121,7 +122,7 @@ namespace Reactions{
 								);
 		/*A.12*/kp.Cvals[PBe5ba] = tchar*(
 									Consts::k5on*p.Cvals[PBe5ba]* //k5on*e5*
-									(Consts::N5b*Pba + Consts::N5se*Psea - p.Cvals[ze5mtot])
+									(Consts::N5b*p.Pba + Consts::N5se*p.Psea - p.Cvals[ze5mtot])
 									- Consts::k5off*p.Cvals[PBe5ba]
 									+ Consts::kz5e10mcat*p.Cvals[PBz5ba_e10ba]
 									+ Consts::kz5e2mcat*p.Cvals[PBz5ba_e2ba]
@@ -132,7 +133,7 @@ namespace Reactions{
 								);
 		/*A.13*/kp.Cvals[PBz8ba] = tchar*(
 									Consts::k8on*p.Cvals[PBz8ba]* //k8on*z8*
-									(Consts::N8b*Pba + Consts::N8se*Psea - p.Cvals[ze8mtot])
+									(Consts::N8b*p.Pba + Consts::N8se*p.Psea - p.Cvals[ze8mtot])
 									- Consts::k8off*p.Cvals[PBz8ba]
 									- Consts::kz8e10mplus*p.Cvals[PBz8ba]*p.Cvals[PBe10ba]
 									+ Consts::kz8e10mminus*p.Cvals[PBz8ba_e10ba]
@@ -141,7 +142,7 @@ namespace Reactions{
 								);
 		/*A.14*/kp.Cvals[PBe8ba] = tchar*(
 									Consts::k8on*p.Cvals[PBe8ba]* //k8on*e8*
-									(Consts::N8b*Pba + Consts::N8se*Psea - p.Cvals[ze8mtot])
+									(Consts::N8b*p.Pba + Consts::N8se*p.Psea - p.Cvals[ze8mtot])
 									- Consts::k8off*p.Cvals[PBe8ba]
 									+ Consts::kz8e10mcat*p.Cvals[PBz8ba_e10ba]
 									+ Consts::kz8e2mcat*p.Cvals[PBz8ba_e2ba]
@@ -152,19 +153,19 @@ namespace Reactions{
 								);
 		/*A.15*/kp.Cvals[PBz9ba] = tchar*(
 									Consts::k9on*p.Cvals[PBz9ba]* //k9on*z9*
-									(Consts::N9b*Pba + Consts::N9se*Psea - p.Cvals[ze9mtot])
+									(Consts::N9b*p.Pba + Consts::N9se*p.Psea - p.Cvals[ze9mtot])
 									-Consts::k9off*p.Cvals[PBz9ba]
 								);
 		/*A.16*/kp.Cvals[PBe9ba] = tchar*(
 									Consts::k9on*p.Cvals[PBe9ba]* // k9on*e9*
-									(Consts::N9b*Pba + Consts::N9se*Psea - p.Cvals[ze9mtot])
+									(Consts::N9b*p.Pba + Consts::N9se*p.Psea - p.Cvals[ze9mtot])
 									-Consts::k9off*p.Cvals[PBe9ba]
 									+ Consts::ktenminus*p.Cvals[PBten] 
 									- Consts::ktenplus*p.Cvals[PBe8ba]*p.Cvals[PBe9ba]
 								);
 		/*A.17*/kp.Cvals[PBz10ba] = tchar*(
 									Consts::k10on*p.Cvals[PBz10ba]* //k10on*z10*
-									(Consts::N10b*Pba + Consts::N10se*Psea - p.Cvals[ze10mtot])
+									(Consts::N10b*p.Pba + Consts::N10se*p.Psea - p.Cvals[ze10mtot])
 									- Consts::k10off*p.Cvals[PBz10ba]
 									+ Consts::kz10tenmminus*p.Cvals[PBz10ba_ten]
 									- Consts::kz10tenmplus*p.Cvals[PBz10ba]*p.Cvals[PBten]
@@ -173,7 +174,7 @@ namespace Reactions{
 								);
 		/*A.18*/kp.Cvals[PBe10ba] = tchar*(
 									Consts::k10on*p.Cvals[PBe10ba]* // k10on*e10*
-									(Consts::N10b*Pba + Consts::N10se*Psea - p.Cvals[ze10mtot])
+									(Consts::N10b*p.Pba + Consts::N10se*p.Psea - p.Cvals[ze10mtot])
 									- Consts::k10off*p.Cvals[PBe10ba]
 									+ (Consts::kz5e10mminus + Consts::kz5e10mcat)*p.Cvals[PBz5ba_e10ba]
 									- Consts::kz5e10mminus*p.Cvals[PBz5ba]*p.Cvals[PBe10ba]
@@ -221,7 +222,8 @@ namespace Reactions{
 									- (Consts::kz10tenmminus + Consts::kz10tenmcat)*p.Cvals[PBz10ba_ten]
 								);
 		/*A.27*/kp.Cvals[PBapc_e5ba] = tchar*(
-									Consts::kapce5mplus*p.Cvals[PBapc]*p.Cvals[PBe5ba] - (Consts::kapce5mminus + Consts::kapce5mcat)*p.Cvals[PBapc_e5ba]
+									Consts::kapce5mplus*p.Cvals[PBapc]*p.Cvals[PBe5ba] - 
+									(Consts::kapce5mminus + Consts::kapce5mcat)*p.Cvals[PBapc_e5ba]
 								);
 		/*A.28*/kp.Cvals[PBapc_e8ba] = tchar*(
 									Consts::kapce8mplus*p.Cvals[PBapc]*p.Cvals[PBe8ba]
@@ -229,7 +231,8 @@ namespace Reactions{
 								);
 		/*A.29*/kp.Cvals[PBe9starba] = tchar*(
 									Consts::k9on*p.Cvals[PBe9ba]* //k9on*e9*
-									(Consts::N9starb*Pba + Consts::N9starse*Psea - p.Cvals[PBe9starba] - p.Cvals[PBtenstar] - p.Cvals[PBz10ba_tenstar])
+									(Consts::N9starb*p.Pba + Consts::N9starse*p.Psea - p.Cvals[PBe9starba] - 
+									  p.Cvals[PBtenstar] - p.Cvals[PBz10ba_tenstar])
 									- Consts::k9off*p.Cvals[PBe9starba]
 									+ Consts::ktenminus*p.Cvals[PBtenstar]
 									- Consts::ktenplus*p.Cvals[PBe8ba]*p.Cvals[PBe9ba]

@@ -27,16 +27,16 @@ namespace Reactions{
 		double dt, tchar; 
 
 		// Constants provided by user to solver
-		double Pba, Psea;
+		//double Pba, Psea;
 
 		/// Default Constructor
 		ODESolver()
 		{
-		std::cout<<"Created deafult ODESolver.\n";
-		T = 5.0;
-		dt = 0.001;
-		tchar = 1e-5; // what should this be?
-		}
+			std::cout<<"Created deafult ODESolver.\n";
+			T = 5.0;
+			dt = 0.001;
+			tchar = 1e-5; // what should this be?
+			}
 
 		/// Parametrized constructor
 		ODESolver(double T, double dt)
@@ -51,10 +51,10 @@ namespace Reactions{
 		/// Destructor
 		~ODESolver()
 		{
-		std::cout<<"Destroyed ODESolver.\n";
+			std::cout<<"Destroyed ODESolver.\n";
 		}
 
-		void setPba(double pba)
+		/*void setPba(double pba)
 		{
 			Pba = pba; 
 		}
@@ -62,7 +62,7 @@ namespace Reactions{
 		void setPsea(double psea)
 		{
 			Psea = psea;
-		}
+		}*/
 
 		double RK2solve(Domain &d);
 

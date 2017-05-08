@@ -13,7 +13,7 @@ int main(int argc, char *argv[])
 {
 	ODESolver *solver = new ODESolver(2,0.5);
 
-	Domain domain(50,20,100,80);
+	Domain domain(80,20,128,32);
 	double current_time = 0; 
 
 	double Pba, Psea;
@@ -23,8 +23,8 @@ int main(int argc, char *argv[])
 	cout<< "You entered: Pba="<<Pba<< " and Psea="<<Psea<<endl;;
 
 	// set Pba and Psea for solver
-	solver->setPba(Pba);
-	solver->setPsea(Psea);
+	//solver->setPba(Pba);
+	//solver->setPsea(Psea);
 
 	// begin time tracking:
 	time_t start = time(NULL);

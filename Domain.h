@@ -47,7 +47,7 @@ class Domain{
 			mesh.resize(ny);
 			for (int i = 0; i < ny; ++i)
 				mesh[i].resize(nx);
-			
+			std::cout<<"\nMesh size = Nx*Ny = "<<nx*ny<<"\n";
 
 		}
 
