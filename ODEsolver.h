@@ -5,7 +5,7 @@
 #include <map>
 #include <string>
 #include <vector>
-#include "myEnums.h"
+#include "Consts.h"
 #include "Domain.h"
 #include "Point.h"
 
@@ -54,12 +54,6 @@ namespace Reactions{
 		std::cout<<"Destroyed ODESolver.\n";
 		}
 
-		/// getConstMap
-		ConstMap& getConsts()
-		{
-		return this->consts;
-		}
-
 		void setPba(double pba)
 		{
 			Pba = pba; 
@@ -96,7 +90,6 @@ namespace Reactions{
 		0.5, // /*A28*/ kapce8mcat,
 	  	250.0, 250.0 // /*A29*/ N9starb, N9starse
 	   };
-
 
 	};
 }

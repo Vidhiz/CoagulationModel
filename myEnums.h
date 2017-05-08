@@ -39,14 +39,4 @@ namespace Reactions
 		/*A31*/
 	};
 
-//	class Consts
-//	{
-//	public:
-//		static const double k2on 	= 42.0;
-//		static const double N2b 	= 12;
-//
-//			};
-}
-
-
 #endif //REACTIONS_MY_ENUMS

@@ -18,15 +18,6 @@ int main(int argc, char *argv[])
 
 	double Pba, Psea;
 
-	ConstMap &consts = solver->getConsts();
-
-	// check assignment of constants
-	/*cout<<"Constants for ODEs assigned as follows:"<<endl;
-	for (const auto &kv : consts)
-	{
-			cout << kv.first<<" = "<< kv.second <<" " <<consts[ODESolver::k2on]<< endl;
-	}*/
-
 	cout<< "Enter Pba and Psea:"<<endl;
 	cin>>Pba>>Psea;
 	cout<< "You entered: Pba="<<Pba<< " and Psea="<<Psea<<endl;;
