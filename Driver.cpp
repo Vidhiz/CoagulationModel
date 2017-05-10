@@ -1,4 +1,5 @@
 #include <iostream>
+#include <fstream>
 #include "ODEsolver.h"
 #include "Domain.h"
 
@@ -14,17 +15,124 @@ int main(int argc, char *argv[])
 	ODESolver *solver = new ODESolver(2,0.5);
 
 	Domain domain(80,20,128,32);
+	Mesh m = domain.get_mesh();
+
+	// open files and load m with data 
+	ifstream myfilepba ("/home/vidhizala/Documents/karincode/Data/befor.Pba.0032.0001.dat", ios::in);
+	ifstream myfilepsea ("/home/vidhizala/Documents/karincode/Data/befor.Psea.0032.0001.dat",ios::in);
+	ifstream myfilez2 ("/home/vidhizala/Documents/karincode/Data/befor.z2ba.0032.0001.dat ",ios::in);
+	ifstream myfilee2 ("/home/vidhizala/Documents/karincode/Data/befor.e2ba.0032.0001.dat",ios::in);
+	ifstream myfilez5 ("/home/vidhizala/Documents/karincode/Data/befor.z5ba.0032.0001.dat",ios::in);
+	ifstream myfilee5 ("/home/vidhizala/Documents/karincode/Data/befor.e5ba.0032.0001.dat",ios::in);
+	ifstream myfilez8 ("/home/vidhizala/Documents/karincode/Data/befor.z8ba.0032.0001.dat",ios::in);
+	ifstream myfilee8 ("/home/vidhizala/Documents/karincode/Data/befor.e8ba.0032.0001.dat",ios::in);
+	ifstream myfilez9 ("/home/vidhizala/Documents/karincode/Data/befor.z9ba.0032.0001.dat",ios::in);
+	ifstream myfilee9 ("/home/vidhizala/Documents/karincode/Data/befor.e9ba.0032.0001.dat",ios::in);
+	ifstream myfilez10 ("/home/vidhizala/Documents/karincode/Data/befor.z10ba.0032.0001.dat",ios::in);
+	ifstream myfilee10 ("/home/vidhizala/Documents/karincode/Data/befor.e10ba.0032.0001.dat",ios::in);
+	ifstream myfileten ("/home/vidhizala/Documents/karincode/Data/befor.ten.0032.0001.dat",ios::in);
+	ifstream myfilepro ("/home/vidhizala/Documents/karincode/Data/befor.pro.0032.0001.dat",ios::in);
+	ifstream myfilez2bapro ("/home/vidhizala/Documents/karincode/Data/befor.z2ba_pro.0032.0001.dat ",ios::in);
+	ifstream myfilez5bae2ba ("/home/vidhizala/Documents/karincode/Data/befor.z5ba_e2ba.0032.0001.dat",ios::in);
+	ifstream myfilez5bae10ba ("/home/vidhizala/Documents/karincode/Data/befor.z5ba_e10ba.0032.0001.dat",ios::in);
+	ifstream myfilez8bae2ba ("/home/vidhizala/Documents/karincode/Data/befor.z8ba_e2ba.0032.0001.dat",ios::in);
+	ifstream myfilez8bae10ba ("/home/vidhizala/Documents/karincode/Data/befor.z8ba_e10ba.0032.0001.dat",ios::in);
+	ifstream myfilez10baten ("/home/vidhizala/Documents/karincode/Data/befor.z10ba_ten.0032.0001.dat",ios::in);
+	ifstream myfileapce5ba ("/home/vidhizala/Documents/karincode/Data/befor.apc_e5ba.0032.0001.dat",ios::in);
+	ifstream myfileapce8ba ("/home/vidhizala/Documents/karincode/Data/befor.apc_e8ba.0032.0001.dat",ios::in);
+	ifstream myfilee9starba ("/home/vidhizala/Documents/karincode/Data/befor.e9starba.0032.0001.dat",ios::in);
+	ifstream myfilepbtenstar ("/home/vidhizala/Documents/karincode/Data/befor.tenstar.0032.0001.dat",ios::in);
+	ifstream myfilez10batenstar ("/home/vidhizala/Documents/karincode/Data/befor.z10ba_tenstar.0032.0001.dat",ios::in);
+
+	int count;
+	double tmp;
+	myfilepba >> count;
+	// for each point in the domain :
+	for(int j = 0; j<domain.ny; j++)
+	{
+		for(int k = 0; k<domain.nx; k++)
+		{
+			
+	        myfilepba >> tmp;
+	        m[j][k].Pba = tmp;
+	        //cout << m[j][k].Pba<<"\n";
+
+	        myfilepsea >> tmp;
+	        m[j][k].Psea = tmp;
+
+	        myfilez2 >> tmp;
+	        m[j][k].Cvals[PBz2ba] = tmp;
+
+	        myfilee2 >> tmp;
+	        m[j][k].Cvals[PBe2ba] = tmp;
+
+	        myfilez5 >> tmp;
+	        m[j][k].Cvals[PBz5ba] = tmp;
+
+	        myfilee2 >> tmp;
+	        m[j][k].Cvals[PBe5ba] = tmp;
+
+	        myfilez8 >> tmp;
+	        m[j][k].Cvals[PBz8ba] = tmp;
+
+	        myfilee8 >> tmp;
+	        m[j][k].Cvals[PBe8ba] = tmp;
+
+	        myfilez9 >> tmp;
+	        m[j][k].Cvals[PBz9ba] = tmp;
+
+	        myfilee9 >> tmp;
+	        m[j][k].Cvals[PBe9ba] = tmp;
+
+	        myfilez10 >> tmp;
+	        m[j][k].Cvals[PBz10ba] = tmp;
+
+	        myfilee10 >> tmp;
+	        m[j][k].Cvals[PBe10ba] = tmp;
+
+	        myfileten >> tmp;
+	        m[j][k].Cvals[PBten] = tmp;
+
+	        myfilepro >> tmp;
+	        m[j][k].Cvals[PBpro] = tmp;
+
+	        myfilez2bapro >> tmp;
+	        m[j][k].Cvals[PBz2ba_pro] = tmp;
+
+	        myfilez5bae2ba >> tmp;
+	        m[j][k].Cvals[PBz5ba_e2ba] = tmp;
+
+	        myfilez5bae10ba >> tmp;
+	        m[j][k].Cvals[PBz5ba_e10ba] = tmp;
+
+	        myfilez8bae2ba >> tmp;
+	        m[j][k].Cvals[PBz8ba_e2ba] = tmp;
+	        
+	        myfilez8bae10ba >> tmp;
+	        m[j][k].Cvals[PBz8ba_e10ba] = tmp;
+	        
+	        myfilez10baten >> tmp;
+	        m[j][k].Cvals[PBz10ba_ten] = tmp;
+	        
+	        myfileapce5ba >> tmp;
+	        m[j][k].Cvals[PBapc_e5ba] = tmp;
+	        
+	        myfileapce8ba >> tmp;
+	        m[j][k].Cvals[PBapc_e8ba] = tmp;
+
+	        myfilee9starba>> tmp;
+	        m[j][k].Cvals[PBe9starba] = tmp;
+
+	        myfilepbtenstar >> tmp;
+	        m[j][k].Cvals[PBtenstar] = tmp;
+
+	        myfilez10batenstar >> tmp;
+	        m[j][k].Cvals[PBz10ba_tenstar] = tmp;
+		   
+		}
+	}
+
 	double current_time = 0; 
-
-	double Pba, Psea;
-
-	cout<< "Enter Pba and Psea:"<<endl;
-	cin>>Pba>>Psea;
-	cout<< "You entered: Pba="<<Pba<< " and Psea="<<Psea<<endl;;
-
-	// set Pba and Psea for solver
-	//solver->setPba(Pba);
-	//solver->setPsea(Psea);
 
 	// begin time tracking:
 	time_t start = time(NULL);
