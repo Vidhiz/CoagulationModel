@@ -44,7 +44,7 @@ namespace Reactions{
 			std::cout<<"Created parameterized ODESolver.\n";
 			ODESolver::T = T;
 			ODESolver::dt = dt;
-			tchar = dt/100;
+			tchar = dt/10;
 		}
 
 

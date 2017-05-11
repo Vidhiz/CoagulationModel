@@ -1,5 +1,6 @@
 #include <iostream>
 #include <fstream>
+#include <cmath>
 #include "ODEsolver.h"
 #include "Domain.h"
 
@@ -9,10 +10,13 @@ using namespace Reactions;
 // signature of function to display output concentrations:
 void displayC(ODESolver *, Domain&, double );
 
+// function that myrounds to desired precision
+double myround(double f,int prec);
+
 /////////////////////////////
 int main(int argc, char *argv[])
 {
-	ODESolver *solver = new ODESolver(2,0.5);
+	ODESolver *solver = new ODESolver(1.0000000000000002e-002,1.0000000000000000E-003);
 
 	Domain domain(80,20,128,32);
 	Mesh m = domain.get_mesh();
@@ -147,8 +151,9 @@ int main(int argc, char *argv[])
 	return 0;
 }
 
-void displayC(ODESolver  *solver, Domain &domain, double current_time){
-	cout<<"\nComputation complete. Here are the concentrations for chemicals at a point (x,y) in time "
+void displayC(ODESolver  *solver, Domain &domain, double current_time)
+{
+	/*cout<<"\nComputation complete. Here are the concentrations for chemicals at a point (x,y) in time "
 	<<current_time<<" s"<<endl;
 	cout<<" PBz2ba, PBe2ba, PBz5ba, PBe5ba, PBz8ba, PBe8ba, PBz9ba, PBe9ba,PBz10ba, PBe10ba, PBten,\
 	PBpro, PBz2ba_pro, PBz5ba_e2ba, PBz5ba_e10ba, PBz8ba_e2ba, PBz8ba_e10ba, PBz10ba_ten, PBapc_e5ba,\
@@ -157,6 +162,220 @@ void displayC(ODESolver  *solver, Domain &domain, double current_time){
 	for( int i = 0; i< solver->numV; i++)
 	{
 		cout<<domain.mesh[2][2].Cvals[i]<<", ";
+	}*/
+
+	ifstream myfilez2 ("/home/vidhizala/Documents/karincode/Data/after.z2ba.0032.0002.dat ",ios::in);
+	ifstream myfilee2 ("/home/vidhizala/Documents/karincode/Data/after.e2ba.0032.0002.dat",ios::in);
+	ifstream myfilez5 ("/home/vidhizala/Documents/karincode/Data/after.z5ba.0032.0002.dat",ios::in);
+	ifstream myfilee5 ("/home/vidhizala/Documents/karincode/Data/after.e5ba.0032.0002.dat",ios::in);
+	ifstream myfilez8 ("/home/vidhizala/Documents/karincode/Data/after.z8ba.0032.0002.dat",ios::in);
+	ifstream myfilee8 ("/home/vidhizala/Documents/karincode/Data/after.e8ba.0032.0002.dat",ios::in);
+	ifstream myfilez9 ("/home/vidhizala/Documents/karincode/Data/after.z9ba.0032.0002.dat",ios::in);
+	ifstream myfilee9 ("/home/vidhizala/Documents/karincode/Data/after.e9ba.0032.0002.dat",ios::in);
+	ifstream myfilez10 ("/home/vidhizala/Documents/karincode/Data/after.z10ba.0032.0002.dat",ios::in);
+	ifstream myfilee10 ("/home/vidhizala/Documents/karincode/Data/after.e10ba.0032.0002.dat",ios::in);
+	ifstream myfileten ("/home/vidhizala/Documents/karincode/Data/after.ten.0032.0002.dat",ios::in);
+	ifstream myfilepro ("/home/vidhizala/Documents/karincode/Data/after.pro.0032.0002.dat",ios::in);
+	ifstream myfilez2bapro ("/home/vidhizala/Documents/karincode/Data/after.z2ba_pro.0032.0002.dat ",ios::in);
+	ifstream myfilez5bae2ba ("/home/vidhizala/Documents/karincode/Data/after.z5ba_e2ba.0032.0002.dat",ios::in);
+	ifstream myfilez5bae10ba ("/home/vidhizala/Documents/karincode/Data/after.z5ba_e10ba.0032.0002.dat",ios::in);
+	ifstream myfilez8bae2ba ("/home/vidhizala/Documents/karincode/Data/after.z8ba_e2ba.0032.0002.dat",ios::in);
+	ifstream myfilez8bae10ba ("/home/vidhizala/Documents/karincode/Data/after.z8ba_e10ba.0032.0002.dat",ios::in);
+	ifstream myfilez10baten ("/home/vidhizala/Documents/karincode/Data/after.z10ba_ten.0032.0002.dat",ios::in);
+	ifstream myfileapce5ba ("/home/vidhizala/Documents/karincode/Data/after.apc_e5ba.0032.0002.dat",ios::in);
+	ifstream myfileapce8ba ("/home/vidhizala/Documents/karincode/Data/after.apc_e8ba.0032.0002.dat",ios::in);
+	ifstream myfilee9starba ("/home/vidhizala/Documents/karincode/Data/after.e9starba.0032.0002.dat",ios::in);
+	ifstream myfilepbtenstar ("/home/vidhizala/Documents/karincode/Data/after.tenstar.0032.0002.dat",ios::in);
+	ifstream myfilez10batenstar ("/home/vidhizala/Documents/karincode/Data/after.z10ba_tenstar.0032.0002.dat",ios::in);
+
+	int count, flag = 0;
+	bool loop = true;
+	double tmp;
+	Mesh m = domain.get_mesh();
+	myfilez2 >> count;
+	// for each point in the domain :
+	for(int j = 0; j<domain.ny && loop; j++)
+	{
+		for(int k = 0; k<domain.nx && loop; k++)
+		{
+			
+	        myfilez2 >> tmp;
+	        if(myround(m[j][k].Cvals[PBz2ba],4) != myround(tmp,4))
+ 			{
+	        	cout<<"\n3\nbreaking!";
+	        	flag = 1; loop = false;
+	        	break;
+	        }
+
+	        myfilee2 >> tmp;
+	        if(myround(m[j][k].Cvals[PBe2ba],4) != myround(tmp,4))
+	         {
+	        	cout<<"\n4\nbreaking!";
+	        	flag = 1; loop = false;
+	        	break;
+	        }
+
+	        myfilez5 >> tmp;
+	        if(myround(m[j][k].Cvals[PBz5ba],4) != myround(tmp,4))
+	         {
+	        	cout<<"\n5\nbreaking!";
+	        	flag = 1; loop = false;
+	        	break;
+	        }
+
+	        myfilee2 >> tmp;
+	        if(myround(m[j][k].Cvals[PBe5ba],4) != myround(tmp,4))
+	         {
+	        	cout<<"\n4\nbreaking! ";
+	        	flag = 1; loop = false;
+	        	break;
+	        }
+	        myfilez8 >> tmp;
+	        if(myround(m[j][k].Cvals[PBz8ba],4) != myround(tmp,4))
+	         {
+	        	cout<<"\n7\nbreaking!";
+	        	flag = 1; loop = false;
+	        	break;
+	        }
+	        myfilee8 >> tmp;
+	        if(myround(m[j][k].Cvals[PBe8ba],4) != myround(tmp,4))
+	         {
+	        	cout<<"\n8\nbreaking!";
+	        	flag = 1; loop = false;
+	        	break;
+	        }
+	        myfilez9 >> tmp;
+	        if(myround(m[j][k].Cvals[PBz9ba],4) != myround(tmp,4))
+	         {
+	        	cout<<"\n9\nbreaking!";
+	        	flag = 1; loop = false;
+	        	break;
+	        }
+	        myfilee9 >> tmp;
+	        if(myround(m[j][k].Cvals[PBe9ba] ,4)!= myround(tmp,4))
+	         {
+	        	cout<<"\n10\nbreaking!";
+	        	flag = 1; loop = false;
+	        	break;
+	        }
+	        myfilez10 >> tmp;
+	        if(myround(m[j][k].Cvals[PBz10ba],4) != myround(tmp,4))
+	         {
+	        	cout<<"\n11\nbreaking!";
+	        	flag = 1; loop = false;
+	        	break;
+	        }
+	        myfilee10 >> tmp;
+	        if(myround(m[j][k].Cvals[PBe10ba],4) != myround(tmp,4))
+	         {
+	        	cout<<"\n12\nbreaking!";
+	        	flag = 1; loop = false;
+	        	break;
+	        }
+	       
+	        myfileten >> tmp;
+	        if(myround(m[j][k].Cvals[PBten],4) != myround(tmp,4))
+	         {
+	        	cout<<"\n13\nbreaking!";
+	        	flag = 1; loop = false;
+	        	break;
+	        }
+	        myfilepro >> tmp;
+	        if(myround(m[j][k].Cvals[PBpro],4) != myround(tmp,4))
+	         {
+	        	cout<<"\n14\nbreaking!";
+	        	flag = 1; loop = false;
+	        	break;
+	        }
+	        myfilez2bapro >> tmp;
+	        if(myround(m[j][k].Cvals[PBz2ba_pro] ,4)!= myround(tmp,4))
+	         {
+	        	cout<<"\n15\nbreaking!";
+	        	flag = 1; loop = false;
+	        	break;
+	        }
+	        myfilez5bae2ba >> tmp;
+	        if(myround(m[j][k].Cvals[PBz5ba_e2ba],4) != myround(tmp,4))
+	         {
+	        	cout<<"\n16\nbreaking!";
+	        	flag = 1; loop = false;
+	        	break;
+	        }
+	        myfilez5bae10ba >> tmp;
+	        if(myround(m[j][k].Cvals[PBz5ba_e10ba],4) != myround(tmp,4))
+	         {
+	        	cout<<"\n17\nbreaking!";
+	        	flag = 1; loop = false;
+	        	break;
+	        }
+	        myfilez8bae2ba >> tmp;
+	        if(myround(m[j][k].Cvals[PBz8ba_e2ba],4) != myround(tmp,4))
+	         {
+	        	cout<<"\n18\nbreaking!";
+	        	flag = 1; loop = false;
+	        	break;
+	        }
+	        myfilez8bae10ba >> tmp;
+	        if(myround(m[j][k].Cvals[PBz8ba_e10ba],4) != myround(tmp,4))
+	         {
+	        	cout<<"\n19\nbreaking!";
+	        	flag = 1; loop = false;
+	        	break;
+	        }
+	        myfilez10baten >> tmp;
+	        if(myround(m[j][k].Cvals[PBz10ba_ten],4) != myround(tmp,4))
+	         {
+	        	cout<<"\n20\nbreaking!";
+	        	flag = 1; loop = false;
+	        	break;
+	        }
+	        myfileapce5ba >> tmp;
+	        if(myround(m[j][k].Cvals[PBapc_e5ba],4) != myround(tmp,4))
+	         {
+	        	cout<<"\n21\nbreaking!";
+	        	flag = 1; loop = false;
+	        	break;
+	        }
+	        myfileapce8ba >> tmp;
+	        if(myround(m[j][k].Cvals[PBapc_e8ba],4) != myround(tmp,4))
+	         {
+	        	cout<<"\n22\nbreaking!";
+	        	flag = 1; loop = false;
+	        	break;
+	        }
+	        myfilee9starba>> tmp;
+	        if(myround(m[j][k].Cvals[PBe9starba],4) != myround(tmp,4))
+	         {
+	        	cout<<"\n23\nbreaking!";
+	        	flag = 1; loop = false;
+	        	break;
+	        }
+	        myfilepbtenstar >> tmp;
+	        if(myround(m[j][k].Cvals[PBtenstar],4) != myround(tmp,4))
+	         {
+	        	cout<<"\n24\nbreaking!";
+	        	flag = 1; loop = false;
+	        	break;
+	        }
+	        myfilez10batenstar >> tmp;
+	        if(myround(m[j][k].Cvals[PBz10ba_tenstar],4) != myround(tmp,4))
+		   	 {
+	        	cout<<"\n25\nbreaking!";
+	        	flag = 1; loop = false;
+	        	break;
+	        }
+		}
 	}
 
+	if(flag == 0)
+	{
+		cout<<"\n Verified.";
+	}
+	cout<<"\n Test complete!";
+
+}
+
+double myround(double f,int prec)
+{
+    return (double) (floor(f*(1.0f/prec) + 0.5)/(1.0f/prec));
 }
